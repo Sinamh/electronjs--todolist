@@ -18,7 +18,14 @@ app.on("ready", function () {
       protocol: "file",
       slashes: true,
     })
+    // url.pathToFileURL(path.join(__dirname, "main-window.html")).href;
   );
-  // url.pathToFileURL(path.join(__dirname, "main-window.html"));
 });
+// console.log(
+//   url.format({
+//     pathname: path.join(__dirname, "main-window.html"),
+//     protocol: "file",
+//     slashes: true,
+//   })
+// );
 // console.log(url.pathToFileURL(path.join(__dirname, "main-window.html")).href);
