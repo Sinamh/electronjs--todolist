@@ -1,9 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>ShoppinggggList</title>
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="styles/materialize/css/materialize.min.css"
+      media="screen,projection"
+    />
+    <title>ToDo List</title>
   </head>
   <body>
-    <h1>ShoppingList</h1>
+    <nav>
+      <div class="nav-wrapper">
+        <a href="" class="brand-logo center">ToDo List</a>
+      </div>
+    </nav>
+    <ul></ul>
   </body>
+  <script
+    type="text/javascript"
+    src="styles/materialize/js/materialize.min.js"
+  ></script>
+  <script>
+    const electron = require("electron");
+    const { ipcRenderer } = electron;
+
+    const ul = document.querySelector("ul");
+
+    // add:item
+    ipcRenderer.on("item:add", function (e, item) {
+      const li = document.createElement("li");
+      li.className = "collection";
+      const itemText = document.createTextNode(item);
+      li.appendChild(itemText);
+      if (text) {
+        ul.appendChild(li);
+        ul.classList.add = "collection";
+      }
+    });
+
+    // clear:item
+    ipcRenderer.on("item:clear", function (e, item) {
+      ul.innerHTML = "";
+      ul.className = "";
+    });
+
+    const removeItem = function (e) {
+      e.target.remove();
+      if (ul.children.length === 0) {
+        ul.className = "";
+      }
+    };
+
+    ul.addEventListener("dbclick", removeItem);
+  </script>
 </html>
