@@ -4,9 +4,10 @@
     <link
       type="text/css"
       rel="stylesheet"
-      href="styles/materialize/css/materialize.min.css"
+      href="../styles/materialize/css/materialize.min.css"
       media="screen,projection"
     />
+    <link rel="stylesheet" href="../styles/main.css" />
     <title>ToDo List</title>
   </head>
   <body>
@@ -19,39 +20,34 @@
   </body>
   <script
     type="text/javascript"
-    src="styles/materialize/js/materialize.min.js"
+    src="../styles/materialize/js/materialize.min.js"
   ></script>
   <script>
     const electron = require("electron");
     const { ipcRenderer } = electron;
-
     const ul = document.querySelector("ul");
-
     // add:item
     ipcRenderer.on("item:add", function (e, item) {
       const li = document.createElement("li");
-      li.className = "collection";
+      li.className = "collection-item";
       const itemText = document.createTextNode(item);
       li.appendChild(itemText);
-      if (text) {
+      if (itemText) {
         ul.appendChild(li);
-        ul.classList.add = "collection";
+        ul.className = "collection";
       }
     });
-
     // clear:item
     ipcRenderer.on("item:clear", function (e, item) {
       ul.innerHTML = "";
       ul.className = "";
     });
-
     const removeItem = function (e) {
       e.target.remove();
       if (ul.children.length === 0) {
         ul.className = "";
       }
     };
-
     ul.addEventListener("dbclick", removeItem);
   </script>
 </html>

@@ -4,7 +4,7 @@
     <link
       type="text/css"
       rel="stylesheet"
-      href="styles/materialize/css/materialize.min.css"
+      href="../styles/materialize/css/materialize.min.css"
       media="screen,projection"
     />
     <title>Add Shopping List Item</title>
@@ -23,7 +23,7 @@
     </div>
     <script
       type="text/javascript"
-      src="styles/materialize/js/materialize.min.js"
+      src="../styles/materialize/js/materialize.min.js"
     ></script>
     <script>
       const electron = require("electron");
@@ -34,7 +34,7 @@
       const submitForm = function (e) {
         e.preventDefault();
         const item = document.querySelector("#item").value;
-        console.log("fuggugu");
+        console.log(item);
         ipcRenderer.send("item:add", item);
       };
 

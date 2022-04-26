@@ -1,0 +1,8 @@
+.collection-item {
+  font-size: 2rem;
+  padding: 1em;
+}
+
+li:hover {
+  cursor: pointer;
+}
