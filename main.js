@@ -37,6 +37,17 @@ app.on("ready", function () {
   Menu.setApplicationMenu(mainMenu);
 });
 
+// Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that position.
+ipcMain.on(`display-app-menu`, function (e, args) {
+  if (isWindows && mainWindow) {
+    menu.popup({
+      window: mainWindow,
+      x: args.x,
+      y: args.y,
+    });
+  }
+});
+
 // Catch item add
 ipcMain.on("item:add", function (e, item) {
   mainWindow.webContents.send("item:add", item);

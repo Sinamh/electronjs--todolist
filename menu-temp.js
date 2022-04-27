@@ -3,6 +3,8 @@ const { app } = electron;
 
 const createAddWindow = require("./add");
 
+const isMac = process.platform === "darwin";
+
 // Create menu template
 const createMenuTemplate = [
   {
@@ -10,7 +12,7 @@ const createMenuTemplate = [
     submenu: [
       {
         label: "Add Item",
-        accelerator: process.platform === "darwin" ? "Shift+A" : "Shift+A",
+        accelerator: isMac ? "Shift+A" : "Shift+A",
         click() {
           createAddWindow();
         },
@@ -23,7 +25,7 @@ const createMenuTemplate = [
       },
       {
         label: "Quit",
-        accelerator: process.platform === "darwin" ? "Cmd+Q" : "Ctrl+Q",
+        accelerator: isMac ? "Cmd+Q" : "Ctrl+Q",
         click() {
           app.quit();
         },
@@ -33,7 +35,7 @@ const createMenuTemplate = [
 ];
 
 // If mac add empty object to menu
-if (process.platform === "darwin") {
+if (isMac) {
   createMenuTemplate.unshift({});
 }
 
@@ -44,7 +46,7 @@ if (process.env.NODE_ENV !== "production") {
     submenu: [
       {
         label: "Toggle DevTools",
-        accelerator: process.platform === "darwin" ? "command+I" : "Ctrl+I",
+        accelerator: isMac ? "command+I" : "Ctrl+I",
         click(item, focusedWindow) {
           focusedWindow.toggleDevTools();
         },
