@@ -1,7 +1,9 @@
-const { remote, ipcRenderer } = require("electron");
+const { ipcRenderer } = require("electron");
 
 function getCurrentWindow() {
-  return remote.getCurrentWindow();
+  // console.log(remote.getCurrentWindow());
+  // return remote.getCurrentWindow();
+  return require("@electron/remote").getCurrentWindow();
 }
 
 function openMenu(x, y) {

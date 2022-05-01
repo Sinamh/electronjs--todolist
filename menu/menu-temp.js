@@ -1,9 +1,11 @@
 const electron = require("electron");
 const { app } = electron;
 
-const createAddWindow = require("./add");
+const createAddWindow = require("../add");
 
 const isMac = process.platform === "darwin";
+
+let mainWindow;
 
 // Create menu template
 const createMenuTemplate = [
@@ -58,4 +60,10 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-module.exports = () => createMenuTemplate;
+// console.log(mainWindow);
+
+exports.getWindowReference = function (thewindow) {
+  // console.log(thewindow);
+  mainWindow = thewindow;
+};
+exports.createMenuTemplate = () => createMenuTemplate;

@@ -15,6 +15,7 @@
     "electron-packager": "^15.5.1"
   },
   "dependencies": {
+    "@electron/remote": "^2.0.8",
     "electron": "^18.1.0"
   }
 }
