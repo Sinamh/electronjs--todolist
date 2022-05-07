@@ -1,3 +1,17 @@
+@font-face {
+  font-family: Goldman;
+  src: url(../fonts/Goldman-Regular.ttf);
+}
+
+:root {
+  --black-darker: #1e2425;
+  --black: #303738;
+  --blue: #0091ea;
+  --green: #14cba8;
+  --white: #d5dade;
+  --dada: #dadd11;
+}
+
 .collection-item {
   font-size: 2rem;
   padding: 1em;
@@ -11,16 +25,16 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: #2f4152;
-  color: rgb(64, 62, 62);
+  background-color: var(--black-darker);
+  color: var(--white);
 }
 
 #menu-bar {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 40px;
-  background: #34475a;
+  height: 30px;
+  background: var(--black);
   -webkit-app-region: drag;
 }
 
@@ -33,7 +47,10 @@ body {
 
 #menu-bar > div h5 {
   color: #d5dade;
+  font-size: 1.25rem;
+  font-family: "Goldman", cursive;
   transform: translate(7px, -4px);
+  text-transform: uppercase;
 }
 
 .menubar-btn {
@@ -77,9 +94,127 @@ button i {
 }
 
 .collection-item {
-  border-radius: 50px;
+  border-radius: 2px;
   padding-bottom: 2em;
-  margin: 8px 0 !important;
-  text-transform: uppercase;
+  margin-bottom: 8px !important;
   user-select: none;
+  color: var(--black-darker);
+  background: var(--blue) !important;
+  border: none !important;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+.collection-item:hover {
+  color: var(--black-darker);
+  background-color: var(--white) !important;
+}
+
+.item-tag {
+  font-size: 0.5em;
+  background-color: rgb(255, 85, 0);
+  border-radius: 50px;
+  padding: 0.25em 0.5em;
+}
+
+.item-todo {
+  background-color: #0091ea !important;
+}
+
+.item-todo:hover {
+  background: linear-gradient(to right, #0091ea 60%, #ffeb3b) !important;
+}
+
+.item-doing {
+  background-color: #ffeb3b !important;
+}
+
+.item-doing:hover {
+  background: linear-gradient(to right, #ffeb3b 60%, #4caf50) !important;
+}
+
+.item-done {
+  background-color: #4caf50 !important;
+}
+
+.item-done:hover {
+  background: linear-gradient(to right, #4caf50 60%, #0091ea) !important;
+}
+
+.unselect {
+  pointer-events: none;
+}
+
+.scrollable-area {
+  overflow-y: scroll;
+  padding-left: 10px;
+  /* background-color: brown; */
+  height: 75vh;
+}
+
+@media (min-height: 600px) {
+  .scrollable-area {
+    height: 80vh;
+  }
+}
+
+@media (min-height: 700px) {
+  .scrollable-area {
+    height: 84vh;
+  }
+}
+
+@media (min-height: 800px) {
+  .scrollable-area {
+    height: 85vh;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--black);
+  border-radius: 10px;
+}
+
+.mainnav {
+  width: 80%;
+  height: 40px;
+  margin: 15px auto;
+  border-radius: 5px;
+  overflow: hidden;
+  /* border: 1px solid red; */
+}
+
+.addbtn,
+.clearallbtn {
+  width: 50%;
+  font-family: "Goldman", cursive;
+  font-weight: bold;
+  color: var(--white);
+  background-color: var(--green);
+}
+
+.addbtn:focus,
+.clearallbtn:focus {
+  color: var(--black-darker);
+  background-color: var(--white);
+}
+
+.addbtn:hover,
+.clearallbtn:hover {
+  cursor: pointer;
+  color: var(--black);
+  background-color: var(--white);
+}
+
+.clearallbtn {
+  float: right;
+  border-left: 1px solid var(--black-darker);
+}
+
+.addbtn {
+  border-right: 1px solid var(--black-darker);
 }

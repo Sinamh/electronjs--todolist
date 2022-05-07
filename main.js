@@ -10,6 +10,7 @@ const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 // const createMenuTemplate = require("./menu/menu-temp");
 const menuTemp = require("./menu/menu-temp");
+const createAddWindow = require("./add");
 
 let mainWindow;
 // let mainW = 11;
@@ -23,6 +24,9 @@ const bootLoader = function () {
       contextIsolation: false,
       preload: path.resolve(app.getAppPath(), "preload.js"),
     },
+    height: 500,
+    minHeight: 500,
+    width: 800,
     minWidth: 640,
     frame: false,
   });
@@ -72,6 +76,10 @@ const bootLoader = function () {
   //     },
   //   });
   // });
+
+  if (global.addclosed) {
+    mainWindow.webContents.send("add:closed");
+  }
 };
 
 // Listen for the app to be ready
@@ -81,5 +89,25 @@ app.on("ready", bootLoader);
 ipcMain.on("item:add", function (e, item) {
   mainWindow.webContents.send("item:add", item);
 });
+
+ipcMain.on("add:opened", () => {
+  mainWindow.webContents.send("main:disable");
+});
+
+ipcMain.on("add:closed", () => {
+  mainWindow.webContents.send("main:enable");
+});
+
+ipcMain.on("items:clear:clicked", () => {
+  mainWindow.webContents.send("item:clear");
+});
+
+ipcMain.on("item:add:clicked", () => {
+  createAddWindow();
+});
+
+exports.activateWindow = function () {
+  mainWindow.webContents.send("main:enable");
+};
 
 // console.log(mainWindows);

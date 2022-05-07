@@ -5,6 +5,7 @@ const createAddWindow = require("../add");
 
 const isMac = process.platform === "darwin";
 
+// const mainWindow = window.getCurrentWindow();
 let mainWindow;
 
 // Create menu template

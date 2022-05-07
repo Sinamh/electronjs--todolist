@@ -1,7 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self'" />
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self';"
+    />
     <link rel="stylesheet" href="../styles/font-awesome/css/all.min.css" />
     <link
       type="text/css"
@@ -18,7 +24,7 @@
         <button class="menubar-btn" id="menu-btn">
           <i class="fas fa-bars"></i>
         </button>
-        <h5>ToDo List</h5>
+        <h5>ToDoList</h5>
       </div>
       <div class="right">
         <button class="menubar-btn" id="minimize-btn">
@@ -37,7 +43,13 @@
         <a href="" class="brand-logo center">ToDo List</a>
       </div>
     </nav> -->
-    <ul></ul>
+    <div class="mainnav">
+      <button class="addbtn">ADD</button>
+      <button class="clearallbtn">CLEAR ALL</button>
+    </div>
+    <div class="scrollable-area">
+      <ul></ul>
+    </div>
   </body>
   <script
     type="text/javascript"
