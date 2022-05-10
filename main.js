@@ -3,7 +3,11 @@
 const url = require("url");
 const path = require("path");
 const electron = require("electron");
-const { session } = require("electron");
+// const { session } = require("electron");
+
+const Promise = require("bluebird");
+const AppDAO = require("./database/dao");
+const TaskRepository = require("./database/task_repository");
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 // const baseUrl = new URL("");
@@ -11,9 +15,35 @@ const { app, BrowserWindow, Menu, ipcMain } = electron;
 // const createMenuTemplate = require("./menu/menu-temp");
 const menuTemp = require("./menu/menu-temp");
 const createAddWindow = require("./add");
+const console = require("console");
 
 let mainWindow;
+let dao;
+let taskRepo;
+let tasklist;
 // let mainW = 11;
+
+const startDB = function () {
+  dao = new AppDAO("./database/database.sqlite3");
+  taskRepo = new TaskRepository(dao);
+  taskRepo
+    .createTable()
+    .then(() => {
+      return taskRepo.getAll();
+    })
+    .then(tasks => {
+      tasklist = tasks;
+      if (!tasklist) tasklist = [];
+    })
+    .finally(() => {
+      mainWindow.webContents.on("did-finish-load", function () {
+        mainWindow.webContents.send("database:started", tasklist);
+      });
+    })
+    .catch(err => {
+      console.log(`Encountered an error: ${err}`);
+    });
+};
 
 const bootLoader = function () {
   // Create a new window
@@ -35,11 +65,6 @@ const bootLoader = function () {
   mainWindow.loadURL(
     url.pathToFileURL(path.join(__dirname, "views/main-window.html")).href
   );
-
-  // Quit app when closed
-  mainWindow.on("closed", function () {
-    app.quit();
-  });
 
   menuTemp.getWindowReference(mainWindow);
 
@@ -68,6 +93,17 @@ const bootLoader = function () {
   require("@electron/remote/main").enable(mainWindow.webContents);
   require("@electron/remote/main").initialize();
 
+  startDB();
+
+  if (global.addclosed) {
+    mainWindow.webContents.send("add:closed");
+  }
+
+  // Quit app when closed
+  mainWindow.on("closed", function () {
+    app.quit();
+  });
+
   // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
   //   callback({
   //     responseHeaders: {
@@ -76,10 +112,6 @@ const bootLoader = function () {
   //     },
   //   });
   // });
-
-  if (global.addclosed) {
-    mainWindow.webContents.send("add:closed");
-  }
 };
 
 // Listen for the app to be ready
@@ -104,6 +136,32 @@ ipcMain.on("items:clear:clicked", () => {
 
 ipcMain.on("item:add:clicked", () => {
   createAddWindow();
+});
+
+ipcMain.on("database:save", (e, item) => {
+  taskRepo
+    .create(item)
+    .then(({ id }) => {
+      return taskRepo.getById(id);
+    })
+    .then(item => {
+      tasklist.push(item);
+      console.log(typeof item.id);
+      mainWindow.webContents.send("database:saved", item);
+    })
+    .catch(err => console.error("Encountered an error: ", err));
+});
+
+ipcMain.on("database:delete", (e, id) => {
+  tasklist.filter(item => {
+    item.id !== id;
+  });
+  taskRepo.delete(id).catch(err => `E ncountered an error: ${err}`);
+});
+
+ipcMain.on("database:clear", () => {
+  tasklist = [];
+  taskRepo.clearTable();
 });
 
 exports.activateWindow = function () {

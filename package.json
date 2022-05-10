@@ -16,6 +16,10 @@
   },
   "dependencies": {
     "@electron/remote": "^2.0.8",
-    "electron": "^18.1.0"
+    "bluebird": "^3.7.2",
+    "electron": "^18.1.0",
+    "electron-json-storage": "^4.5.0",
+    "electron-store": "^8.0.1",
+    "sqlite3": "^5.0.8"
   }
 }

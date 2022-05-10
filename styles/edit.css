@@ -1,0 +1,38 @@
+@font-face {
+  font-family: Goldman;
+  src: url(../fonts/Goldman-Regular.ttf);
+}
+
+:root {
+  --main-bg-dark: #1e2425;
+  --menu-bg-dark: #303738;
+  --item-bg-dark: #0091ea;
+  --item-select-dark: #14cba8;
+  --font-color-dark: #d5dade;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: var(--main-bg-dark);
+  color: var(--font-color-dark);
+}
+
+#item {
+  color: var(--font-color-dark);
+}
+
+.draggable {
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  width: 100%;
+  height: 25px;
+  position: absolute;
+  /* background-color: red; */
+}
+
+.button-container {
+  display: flex;
+  justify-content: space-between;
+}

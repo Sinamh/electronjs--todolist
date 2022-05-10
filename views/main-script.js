@@ -9,6 +9,55 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
+function addItemToDom(id, item) {
+  const li = document.createElement("li");
+  const ptag = document.createElement("p");
+  const citem = capitalizeFirstLetter(item);
+  const itemText = document.createTextNode(citem + "    ");
+  const span = document.createElement("span");
+  const itembtncontainer = document.createElement("div");
+  const modifybtn = document.createElement("button");
+  const deletebtn = document.createElement("button");
+  const iedit = document.createElement("i");
+  const itrash = document.createElement("i");
+  ul.classList.add("collection");
+  li.setAttribute("id", id);
+  li.setAttribute("data-itemstateindex", 1);
+  li.classList.add("collection-item");
+  li.classList.add("item-todo");
+  ptag.classList.add("item-text-paragraph");
+  span.classList.add("item-tag");
+  span.textContent = "ToDo";
+  itembtncontainer.classList.add("del-modify-container");
+  modifybtn.classList.add("item-modify-btn");
+  iedit.classList.add("modifybutton");
+  iedit.classList.add("fa");
+  iedit.classList.add("fa-pen");
+  deletebtn.classList.add("item-delete-btn");
+  itrash.classList.add("deletebutton");
+  itrash.classList.add("fa");
+  itrash.classList.add("fa-trash");
+  li.appendChild(ptag);
+  ptag.appendChild(itemText);
+  ptag.appendChild(span);
+  modifybtn.appendChild(iedit);
+  deletebtn.appendChild(itrash);
+  itembtncontainer.appendChild(modifybtn);
+  itembtncontainer.appendChild(deletebtn);
+  li.appendChild(itembtncontainer);
+  ul.appendChild(li);
+}
+
+function loadDOM(list) {
+  list.map(item => {
+    addItemToDom(item.id, item.description);
+  });
+}
+
+ipcRenderer.on("database:started", (e, tasklist) => {
+  loadDOM(tasklist);
+});
+
 ipcRenderer.on("main:disable", () => {
   bodyel.classList.add("unselect");
 });
@@ -20,34 +69,19 @@ ipcRenderer.on("main:enable", () => {
 // add:item
 ipcRenderer.on("item:add", function (e, item) {
   if (item) {
-    const citem = capitalizeFirstLetter(item);
-    const li = document.createElement("li");
-    li.className = "collection-item";
-    const itemText = document.createTextNode(citem + "    ");
-    li.appendChild(itemText);
-    const span = document.createElement("span");
-    span.classList.add("item-tag");
-    span.textContent = "ToDo";
-    li.appendChild(span);
-    const deletebtn = document.createElement("button");
-    deletebtn.classList.add("item-delete-btn");
-    const i = document.createElement("i");
-    i.classList.add("fa");
-    i.classList.add("fa-trash");
-    deletebtn.appendChild(i);
-    li.appendChild(deletebtn);
-    li.setAttribute("data-itemstateindex", 1);
-    li.classList.add("item-todo");
-    ul.appendChild(li);
-    ul.className = "collection";
+    ipcRenderer.send("database:save", item);
   }
+});
+
+ipcRenderer.on("database:saved", (e, item) => {
+  addItemToDom(item.id, item.description);
 });
 
 // clear:item
 ipcRenderer.on("item:clear", function (e, item) {
-  // console.log("called");
   ul.innerHTML = "";
   ul.className = "";
+  ipcRenderer.send("database:clear");
 });
 
 addbtn.addEventListener("click", () => {
@@ -59,14 +93,18 @@ clearAllBtn.addEventListener("click", () => {
 });
 
 const removeItem = function (e) {
-  // console.log("called");
-  e.target.remove();
+  if (e.target.classList.contains("deletebutton")) {
+    e.target.parentNode.parentNode.parentNode.remove();
+    const id = e.target.parentNode.parentNode.parentNode.id;
+    ipcRenderer.send("database:delete", id);
+  }
   if (ul.children.length === 0) {
     ul.className = "";
   }
 };
 
-ul.addEventListener("dblclick", removeItem);
+ul.addEventListener("click", removeItem);
+// ul.addEventListener("dblclick", removeItem);
 
 const changeState = function (e) {
   const itemstateindex = e.target.dataset.itemstateindex;
@@ -80,19 +118,19 @@ const changeState = function (e) {
       e.target.classList.add("item-todo");
       e.target.classList.remove("item-doing");
       e.target.classList.remove("item-done");
-      e.target.childNodes[1].textContent = "ToDo";
+      e.target.childNodes[0].childNodes[1].textContent = "ToDo";
       break;
     case 1:
       e.target.classList.add("item-doing");
       e.target.classList.remove("item-todo");
       e.target.classList.remove("item-done");
-      e.target.childNodes[1].textContent = "Doing";
+      e.target.childNodes[0].childNodes[1].textContent = "Doing";
       break;
     case 2:
       e.target.classList.add("item-done");
       e.target.classList.remove("item-todo");
       e.target.classList.remove("item-doing");
-      e.target.childNodes[1].textContent = "Done";
+      e.target.childNodes[0].childNodes[1].textContent = "Done";
       break;
     default:
   }

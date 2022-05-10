@@ -25,7 +25,7 @@ body {
   padding: 0;
   margin: 0;
   font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-  background-color: var(--black-darker);
+  background: var(--black-darker);
   color: var(--white);
 }
 
@@ -103,22 +103,25 @@ button i {
   border: none !important;
   font-size: 1.5rem;
   font-weight: bold;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 .collection-item:hover {
   color: var(--black-darker);
-  background-color: var(--white) !important;
+  background: var(--white) !important;
 }
 
 .item-tag {
   font-size: 0.5em;
-  background-color: rgb(255, 85, 0);
+  background: rgb(255, 85, 0);
   border-radius: 50px;
   padding: 0.25em 0.5em;
 }
 
 .item-todo {
-  background-color: #0091ea !important;
+  background: #0091ea !important;
 }
 
 .item-todo:hover {
@@ -126,7 +129,7 @@ button i {
 }
 
 .item-doing {
-  background-color: #ffeb3b !important;
+  background: #ffeb3b !important;
 }
 
 .item-doing:hover {
@@ -134,11 +137,40 @@ button i {
 }
 
 .item-done {
-  background-color: #4caf50 !important;
+  background: #4caf50 !important;
 }
 
 .item-done:hover {
   background: linear-gradient(to right, #4caf50 60%, #0091ea) !important;
+}
+
+.item-text-paragraph {
+  margin: 0;
+  padding: 0;
+}
+
+.del-modify-container button {
+  padding: 0 !important;
+}
+
+.item-delete-btn {
+  margin-left: 0.25em;
+}
+
+.deletebutton,
+.modifybutton {
+  margin: 0;
+  padding: 0.25em;
+  background: var(--white);
+  color: var(--black-darker);
+  border-radius: 5px;
+}
+
+.deletebutton:hover,
+.modifybutton:hover {
+  cursor: pointer;
+  color: rgb(200, 27, 27);
+  background: var(--black);
 }
 
 .unselect {
@@ -148,26 +180,7 @@ button i {
 .scrollable-area {
   overflow-y: scroll;
   padding-left: 10px;
-  /* background-color: brown; */
-  height: 75vh;
-}
-
-@media (min-height: 600px) {
-  .scrollable-area {
-    height: 80vh;
-  }
-}
-
-@media (min-height: 700px) {
-  .scrollable-area {
-    height: 84vh;
-  }
-}
-
-@media (min-height: 800px) {
-  .scrollable-area {
-    height: 85vh;
-  }
+  height: calc(100vh - 121px);
 }
 
 ::-webkit-scrollbar {
@@ -194,20 +207,20 @@ button i {
   font-family: "Goldman", cursive;
   font-weight: bold;
   color: var(--white);
-  background-color: var(--green);
+  background: var(--green);
 }
 
 .addbtn:focus,
 .clearallbtn:focus {
   color: var(--black-darker);
-  background-color: var(--white);
+  background: var(--white);
 }
 
 .addbtn:hover,
 .clearallbtn:hover {
   cursor: pointer;
   color: var(--black);
-  background-color: var(--white);
+  background: var(--white);
 }
 
 .clearallbtn {
@@ -217,4 +230,9 @@ button i {
 
 .addbtn {
   border-right: 1px solid var(--black-darker);
+}
+
+footer {
+  height: 20px;
+  background: var(--black);
 }

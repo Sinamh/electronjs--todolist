@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; style-src 'self';"
+    />
+    <link
+      type="text/css"
+      rel="stylesheet"
+      href="../styles/materialize/css/materialize.min.css"
+      media="screen,projection"
+    />
+    <link rel="stylesheet" href="../styles/edit.css" />
+    <title>Add Shopping List Item</title>
+  </head>
+  <body>
+    <div class="draggable"></div>
+    <div class="container">
+      <form>
+        <div>
+          <label for="item">Modify Item</label>
+          <input type="text" id="item" autofocus />
+        </div>
+        <div class="button-container">
+          <button class="btn waves-effect waves-light" type="submit">
+            Modify Task
+          </button>
+          <button class="close-btn btn waves-effect waves-light" type="button">
+            Cancel
+          </button>
+        </div>
+      </form>
+    </div>
+    <script
+      type="text/javascript"
+      src="../styles/materialize/js/materialize.min.js"
+    ></script>
+    <script src="edit-script.js"></script>
+  </body>
+</html>
