@@ -5,6 +5,8 @@ const { BrowserWindow, ipcMain, app } = electron;
 
 const mainModule = require("./main");
 
+let database;
+
 let editWindow;
 
 // Handle create add window
@@ -22,6 +24,7 @@ const createeditWindow = function (item) {
       contextIsolation: false,
       alwaysOnTop: true,
       preload: path.resolve(app.getAppPath(), "preload.js"),
+      // icon: __dirname + "/assets/icons/todolist.png",
     },
   });
 
@@ -29,6 +32,8 @@ const createeditWindow = function (item) {
   editWindow.loadURL(
     url.pathToFileURL(path.join(__dirname, "views/edit-window.html")).href
   );
+
+  editWindow.setIcon(__dirname + "/assets/icons/todolist.png");
 
   if (process.env.NODE_ENV === "production") {
     editWindow.setMenuBarVisibility(false);
@@ -50,10 +55,18 @@ const createeditWindow = function (item) {
   // });
 
   require("@electron/remote/main").enable(editWindow.webContents);
+
+  editWindow.webContents.on("did-finish-load", function () {
+    editWindow.webContents.send("updateitem", item);
+  });
 };
 
 ipcMain.on("item:edit", function (e, item) {
   if (item) editWindow.close();
 });
 
-module.exports = createEditWindow;
+exports.getdbinstance = function (db) {
+  database = db;
+};
+
+exports.createEditWindow = createeditWindow;

@@ -1,25 +1,32 @@
 {
   "name": "todolist",
+  "productName": "ToDoList",
   "version": "1.0.0",
   "description": "",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
-    "winpack": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"Electron Tutorial App\"",
-    "macpack": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
-    "linuxpack": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/1024x1024.png --prune=true --out=release-builds"
+    "postinstall": "electron-builder install-app-deps",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=assets/icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . todolist --overwrite --asar=true --platform=win32 --arch=ia32 --icon=assets/icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=CE --version-string.FileDescription=CE --version-string.ProductName=\"ToDoList\"",
+    "package-linux": "electron-packager . todolist --overwrite --asar=true --platform=linux --arch=x64 --icon=assets/icons/png/512x512.png --prune=true --out=release-builds"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "electron-packager": "^15.5.1"
-  },
-  "dependencies": {
     "@electron/remote": "^2.0.8",
-    "bluebird": "^3.7.2",
     "electron": "^18.1.0",
-    "electron-json-storage": "^4.5.0",
-    "electron-store": "^8.0.1",
+    "electron-builder": "^23.0.3",
+    "electron-packager": "^15.5.1",
     "sqlite3": "^5.0.8"
+  },
+  "comments": {
+    "dependencies": {
+      "electron-json-storage": "^4.5.0",
+      "electron-store": "^8.0.1"
+    },
+    "devDependencies": {
+      "bluebird": "^3.7.2"
+    }
   }
 }

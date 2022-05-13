@@ -9,25 +9,47 @@ function capitalizeFirstLetter(string) {
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-function addItemToDom(id, item) {
+function addItemToDom({ id, description, taskstate }) {
   const li = document.createElement("li");
   const ptag = document.createElement("p");
-  const citem = capitalizeFirstLetter(item);
+  const citem = capitalizeFirstLetter(description);
   const itemText = document.createTextNode(citem + "    ");
   const span = document.createElement("span");
+  const spantext = document.createElement("spantext");
   const itembtncontainer = document.createElement("div");
   const modifybtn = document.createElement("button");
   const deletebtn = document.createElement("button");
   const iedit = document.createElement("i");
   const itrash = document.createElement("i");
+  const tstate = taskstate;
   ul.classList.add("collection");
   li.setAttribute("id", id);
-  li.setAttribute("data-itemstateindex", 1);
+  li.setAttribute("data-itemstateindex", tstate);
   li.classList.add("collection-item");
-  li.classList.add("item-todo");
   ptag.classList.add("item-text-paragraph");
   span.classList.add("item-tag");
-  span.textContent = "ToDo";
+  spantext.classList.add("item-text");
+  switch (+tstate) {
+    case 0:
+      li.classList.add("item-todo");
+      li.classList.remove("item-doing");
+      li.classList.remove("item-done");
+      span.textContent = "ToDo";
+      break;
+    case 1:
+      li.classList.remove("item-todo");
+      li.classList.add("item-doing");
+      li.classList.remove("item-done");
+      span.textContent = "Doing";
+      break;
+    case 2:
+      li.classList.remove("item-todo");
+      li.classList.remove("item-doing");
+      li.classList.add("item-done");
+      span.textContent = "Done";
+      break;
+    default:
+  }
   itembtncontainer.classList.add("del-modify-container");
   modifybtn.classList.add("item-modify-btn");
   iedit.classList.add("modifybutton");
@@ -38,7 +60,8 @@ function addItemToDom(id, item) {
   itrash.classList.add("fa");
   itrash.classList.add("fa-trash");
   li.appendChild(ptag);
-  ptag.appendChild(itemText);
+  ptag.appendChild(spantext);
+  spantext.appendChild(itemText);
   ptag.appendChild(span);
   modifybtn.appendChild(iedit);
   deletebtn.appendChild(itrash);
@@ -50,7 +73,7 @@ function addItemToDom(id, item) {
 
 function loadDOM(list) {
   list.map(item => {
-    addItemToDom(item.id, item.description);
+    addItemToDom(item);
   });
 }
 
@@ -67,6 +90,16 @@ ipcRenderer.on("main:enable", () => {
 });
 
 // add:item
+ipcRenderer.on("item:edit", function (e, item) {
+  if (item) {
+    const updatedDom = document.getElementById(item.id);
+    updatedDom.firstChild.firstChild.textContent =
+      capitalizeFirstLetter(item.description) + "    ";
+    ipcRenderer.send("database:update", item);
+  }
+});
+
+// add:item
 ipcRenderer.on("item:add", function (e, item) {
   if (item) {
     ipcRenderer.send("database:save", item);
@@ -74,7 +107,7 @@ ipcRenderer.on("item:add", function (e, item) {
 });
 
 ipcRenderer.on("database:saved", (e, item) => {
-  addItemToDom(item.id, item.description);
+  addItemToDom(item);
 });
 
 // clear:item
@@ -102,16 +135,26 @@ const removeItem = function (e) {
     ul.className = "";
   }
 };
-
 ul.addEventListener("click", removeItem);
+
+const updateItem = function (e) {
+  if (e.target.classList.contains("modifybutton")) {
+    // e.target.parentNode.parentNode.parentNode.remove();
+    const id = e.target.parentNode.parentNode.parentNode.id;
+    ipcRenderer.send("item:update", id);
+  }
+};
+ul.addEventListener("click", updateItem);
 // ul.addEventListener("dblclick", removeItem);
 
 const changeState = function (e) {
-  const itemstateindex = e.target.dataset.itemstateindex;
+  let itemstateindex = e.target.dataset.itemstateindex;
 
   if (e.target.tagName.toLowerCase() != "li") return;
 
   e.target.setAttribute("data-itemstateindex", (itemstateindex + 1) % 3);
+
+  itemstateindex = e.target.dataset.itemstateindex;
 
   switch (+itemstateindex) {
     case 0:
@@ -134,6 +177,11 @@ const changeState = function (e) {
       break;
     default:
   }
+
+  ipcRenderer.send("itemstate:changed", {
+    id: e.target.id,
+    itemstateindex: e.target.dataset.itemstateindex,
+  });
 };
 
 ul.addEventListener("click", changeState);

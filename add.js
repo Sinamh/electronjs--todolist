@@ -22,6 +22,7 @@ const createAddWindow = function () {
       contextIsolation: false,
       alwaysOnTop: true,
       preload: path.resolve(app.getAppPath(), "preload.js"),
+      // icon: __dirname + "/assets/icons/todolist.png",
     },
   });
 
@@ -29,6 +30,8 @@ const createAddWindow = function () {
   addWindow.loadURL(
     url.pathToFileURL(path.join(__dirname, "views/add-window.html")).href
   );
+
+  addWindow.setIcon(__dirname + "/assets/icons/todolist.png");
 
   if (process.env.NODE_ENV === "production") {
     addWindow.setMenuBarVisibility(false);
