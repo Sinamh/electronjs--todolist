@@ -126,7 +126,7 @@ dist
 .yarn/install-state.gz
 .pnp.*
 
-#ignored folders
-database/
+#custom folders
 release-builds/
+.sqlite3
 

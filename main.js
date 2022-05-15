@@ -25,7 +25,7 @@ let tasklist;
 // let mainW = 11;
 
 const startDB = function () {
-  dao = new AppDAO("./database/database.sqlite3");
+  dao = new AppDAO("./database.sqlite3");
   taskRepo = new TaskRepository(dao);
   taskRepo
     .createTable()
