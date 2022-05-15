@@ -36,3 +36,21 @@ body {
   display: flex;
   justify-content: space-between;
 }
+
+.editfield {
+  height: 120px;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+  resize: none;
+  background: var(--menu-bg-dark);
+}
+
+.editfield::-webkit-scrollbar {
+  width: 10px;
+}
+
+.editfield::-webkit-scrollbar-thumb {
+  background: var(--item-select-dark);
+  border-radius: 10px;
+}

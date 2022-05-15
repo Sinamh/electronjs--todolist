@@ -114,6 +114,7 @@ button i {
 }
 
 .item-tag {
+  font-family: "Goldman", cursive;
   font-size: 0.5em;
   background: rgb(255, 85, 0);
   border-radius: 50px;
@@ -128,6 +129,12 @@ button i {
   background: linear-gradient(to right, #0091ea 60%, #ffeb3b) !important;
 }
 
+.item-todo .item-tag {
+  color: #0091ea !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
 .item-doing {
   background: #ffeb3b !important;
 }
@@ -136,12 +143,24 @@ button i {
   background: linear-gradient(to right, #ffeb3b 60%, #4caf50) !important;
 }
 
+.item-doing .item-tag {
+  color: #ffeb3b !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
 .item-done {
   background: #4caf50 !important;
 }
 
 .item-done:hover {
   background: linear-gradient(to right, #4caf50 60%, #0091ea) !important;
+}
+
+.item-done .item-tag {
+  color: #4caf50 !important;
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
 }
 
 .item-text-paragraph {

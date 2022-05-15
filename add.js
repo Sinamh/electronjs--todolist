@@ -11,10 +11,12 @@ let addWindow;
 const createAddWindow = function () {
   // Create a new window
   addWindow = new BrowserWindow({
-    width: 300,
-    height: 115,
-    minWidth: 300,
-    minHeight: 115,
+    width: 800,
+    minWidth: 800,
+    maxWidth: 800,
+    height: 190,
+    minHeight: 190,
+    maxHeight: 190,
     title: "Add ToDo Task",
     frame: false,
     webPreferences: {

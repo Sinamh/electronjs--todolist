@@ -51,7 +51,8 @@ if (process.env.NODE_ENV !== "production") {
         label: "Toggle DevTools",
         accelerator: isMac ? "command+I" : "Ctrl+I",
         click(item, focusedWindow) {
-          focusedWindow.toggleDevTools();
+          // focusedWindow.toggleDevTools();
+          focusedWindow.openDevTools({ detached: true });
         },
       },
       {

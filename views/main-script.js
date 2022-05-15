@@ -5,14 +5,16 @@ const addbtn = document.querySelector(".addbtn");
 const clearAllBtn = document.querySelector(".clearallbtn");
 const bodyel = document.querySelector("body");
 
-function capitalizeFirstLetter(string) {
+function styleText(string) {
+  if (string.length >= 25)
+    return string.charAt(0).toUpperCase() + string.slice(1, 25) + "...";
   return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 function addItemToDom({ id, description, taskstate }) {
   const li = document.createElement("li");
   const ptag = document.createElement("p");
-  const citem = capitalizeFirstLetter(description);
+  const citem = styleText(description);
   const itemText = document.createTextNode(citem + "    ");
   const span = document.createElement("span");
   const spantext = document.createElement("spantext");
@@ -94,7 +96,7 @@ ipcRenderer.on("item:edit", function (e, item) {
   if (item) {
     const updatedDom = document.getElementById(item.id);
     updatedDom.firstChild.firstChild.textContent =
-      capitalizeFirstLetter(item.description) + "    ";
+      styleText(item.description) + "    ";
     ipcRenderer.send("database:update", item);
   }
 });

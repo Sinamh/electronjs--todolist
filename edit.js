@@ -13,10 +13,13 @@ let editWindow;
 const createeditWindow = function (item) {
   // Create a new window
   editWindow = new BrowserWindow({
-    width: 300,
-    height: 115,
-    minWidth: 300,
-    minHeight: 115,
+    width: 800,
+    minWidth: 800,
+    maxWidth: 800,
+    height: 190,
+    minHeight: 190,
+    maxHeight: 190,
+    // minHeight: 115,
     title: "Edit This Task",
     frame: false,
     webPreferences: {
