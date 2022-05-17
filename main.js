@@ -3,6 +3,7 @@
 const url = require("url");
 const path = require("path");
 const electron = require("electron");
+const { unlink } = require("node:fs");
 // const { session } = require("electron");
 
 // const Promise = require("bluebird");
@@ -169,15 +170,19 @@ ipcMain.on("database:save", (e, item) => {
 });
 
 ipcMain.on("database:delete", (e, id) => {
-  tasklist.filter(item => {
-    item.id !== id;
-  });
   taskRepo.delete(id).catch(err => `Encountered an error: ${err}`);
+  tasklist = tasklist.filter(item => {
+    return +item.id !== +id;
+  });
+  if (tasklist.length === 0) {
+    taskRepo.resetTable();
+  }
 });
 
 ipcMain.on("database:clear", () => {
   tasklist = [];
   taskRepo.clearTable().catch(err => `Encountered an error: ${err}`);
+  taskRepo.resetTable();
 });
 
 ipcMain.on("database:update", (e, item) => {

@@ -11,9 +11,9 @@ let addWindow;
 const createAddWindow = function () {
   // Create a new window
   addWindow = new BrowserWindow({
-    width: 800,
-    minWidth: 800,
-    maxWidth: 800,
+    width: 500,
+    minWidth: 500,
+    maxWidth: 500,
     height: 190,
     minHeight: 190,
     maxHeight: 190,

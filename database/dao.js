@@ -55,6 +55,10 @@ class AppDAO {
       });
     });
   }
+
+  close() {
+    this.db.close();
+  }
 }
 
 module.exports = AppDAO;

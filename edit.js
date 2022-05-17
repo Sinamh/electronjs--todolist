@@ -5,17 +5,15 @@ const { BrowserWindow, ipcMain, app } = electron;
 
 const mainModule = require("./main");
 
-let database;
-
 let editWindow;
 
 // Handle create add window
 const createeditWindow = function (item) {
   // Create a new window
   editWindow = new BrowserWindow({
-    width: 800,
-    minWidth: 800,
-    maxWidth: 800,
+    width: 500,
+    minWidth: 500,
+    maxWidth: 500,
     height: 190,
     minHeight: 190,
     maxHeight: 190,
