@@ -4,16 +4,7 @@ const { ipcRenderer } = electron;
 const form = document.querySelector("form");
 const close = document.querySelector(".close-btn");
 
-// ipcRenderer.on("add:open", () => {
-// alert("ddddddd");
-//   ipcRenderer.send("add:opened");
-// });
-
 ipcRenderer.send("add:opened");
-
-// ipcRenderer.on("add:close", () => {
-//   ipcRenderer.send("add:closed");
-// });
 
 const submitForm = function (e) {
   e.preventDefault();
@@ -26,7 +17,6 @@ const submitForm = function (e) {
 form.addEventListener("submit", submitForm);
 
 close.addEventListener("click", () => {
-  // console.log("here");
   ipcRenderer.send("add:closed");
   window.closeWindow();
 });

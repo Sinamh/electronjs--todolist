@@ -19,14 +19,5 @@
     "electron-builder": "^23.0.3",
     "electron-packager": "^15.5.1",
     "sqlite3": "^5.0.8"
-  },
-  "comments": {
-    "dependencies": {
-      "electron-json-storage": "^4.5.0",
-      "electron-store": "^8.0.1"
-    },
-    "devDependencies": {
-      "bluebird": "^3.7.2"
-    }
   }
 }

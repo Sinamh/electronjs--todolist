@@ -141,13 +141,11 @@ ul.addEventListener("click", removeItem);
 
 const updateItem = function (e) {
   if (e.target.classList.contains("modifybutton")) {
-    // e.target.parentNode.parentNode.parentNode.remove();
     const id = e.target.parentNode.parentNode.parentNode.id;
     ipcRenderer.send("item:update", id);
   }
 };
 ul.addEventListener("click", updateItem);
-// ul.addEventListener("dblclick", removeItem);
 
 const changeState = function (e) {
   let itemstateindex = e.target.dataset.itemstateindex;
@@ -195,8 +193,6 @@ window.addEventListener("DOMContentLoaded", () => {
   const closeButton = document.getElementById("close-btn");
 
   menuButton.addEventListener("click", e => {
-    // Opens menu at (x,y) coordinates of mouse click on the hamburger icon.
-    // window.openMenu(e.x, e.y);
     window.openMenu(5, 45);
   });
 

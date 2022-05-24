@@ -7,10 +7,6 @@ const editfield = document.querySelector(".editfield");
 
 let editedField;
 
-// ipcRenderer.on("add:open", () => {
-// alert("ddddddd");
-//   ipcRenderer.send("add:opened");
-// });
 
 ipcRenderer.send("edit:opened");
 
@@ -19,9 +15,6 @@ ipcRenderer.on("updateitem", (e, item) => {
   editedField = item;
 });
 
-// ipcRenderer.on("add:close", () => {
-//   ipcRenderer.send("add:closed");
-// });
 
 const submitForm = function (e) {
   e.preventDefault();
@@ -34,7 +27,6 @@ const submitForm = function (e) {
 form.addEventListener("submit", submitForm);
 
 close.addEventListener("click", () => {
-  // console.log("here");
   ipcRenderer.send("edit:closed");
   window.closeWindow();
 });

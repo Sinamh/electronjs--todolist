@@ -17,7 +17,6 @@ const createeditWindow = function (item) {
     height: 190,
     minHeight: 190,
     maxHeight: 190,
-    // minHeight: 115,
     title: "Edit This Task",
     frame: false,
     webPreferences: {
@@ -25,7 +24,6 @@ const createeditWindow = function (item) {
       contextIsolation: false,
       alwaysOnTop: true,
       preload: path.resolve(app.getAppPath(), "preload.js"),
-      // icon: __dirname + "/assets/icons/todolist.png",
     },
   });
 
@@ -44,16 +42,7 @@ const createeditWindow = function (item) {
   editWindow.on("close", function () {
     mainModule.activateWindow();
     editWindow.destroy();
-    // editWindow.webContents.send("add:close");
   });
-
-  // editWindow.on("add:closed", () => {
-  //   editWindow.destroy();
-  // });
-
-  // editWindow.webContents.on("did-finish-load", () => {
-  //   editWindow.webContents.send("add:open");
-  // });
 
   require("@electron/remote/main").enable(editWindow.webContents);
 

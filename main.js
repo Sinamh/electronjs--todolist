@@ -1,29 +1,22 @@
-// process.env.NODE_ENV = "production";
+process.env.NODE_ENV = "production";
 
 const url = require("url");
 const path = require("path");
 const electron = require("electron");
 const { unlink } = require("node:fs");
-// const { session } = require("electron");
-
-// const Promise = require("bluebird");
-const AppDAO = require("./database/dao");
-const TaskRepository = require("./database/task_repository");
-
-const { app, BrowserWindow, Menu, ipcMain } = electron;
-// const baseUrl = new URL("");
-
-// const createMenuTemplate = require("./menu/menu-temp");
 const menuTemp = require("./menu/menu-temp");
 const createAddWindow = require("./add");
 const editModule = require("./edit");
 const console = require("console");
+const AppDAO = require("./database/dao");
+const TaskRepository = require("./database/task_repository");
+
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 let mainWindow;
 let dao;
 let taskRepo;
 let tasklist;
-// let mainW = 11;
 
 const startDB = function () {
   dao = new AppDAO("./database.sqlite3");
@@ -51,11 +44,9 @@ const bootLoader = function () {
   // Create a new window
   mainWindow = new BrowserWindow({
     webPreferences: {
-      // enableRemoteModule: true,
       nodeIntegration: true,
       contextIsolation: false,
       preload: path.resolve(app.getAppPath(), "preload.js"),
-      // icon: __dirname + "/assets/icons/todolist.png",
     },
     height: 500,
     minHeight: 500,
@@ -81,10 +72,6 @@ const bootLoader = function () {
 
   // Register an event listener. When ipcRenderer sends mouse click co-ordinates, show menu at that position.
   var isWindows = process.platform === "win32";
-
-  // mainWindows = 968;
-  // console.log(mainW);
-
   ipcMain.on(`display-app-menu`, function (e, args) {
     if (isWindows && mainWindow) {
       mainMenu.popup({
@@ -108,15 +95,6 @@ const bootLoader = function () {
   mainWindow.on("closed", function () {
     app.quit();
   });
-
-  // session.defaultSession.webRequest.onHeadersReceived((details, callback) => {
-  //   callback({
-  //     responseHeaders: {
-  //       ...details.responseHeaders,
-  //       "Content-Security-Policy": ["default-src 'none'"],
-  //     },
-  //   });
-  // });
 };
 
 // Listen for the app to be ready
@@ -203,5 +181,3 @@ ipcMain.on("item:update", (e, id) => {
 exports.activateWindow = function () {
   mainWindow.webContents.send("main:enable");
 };
-
-// console.log(mainWindows);

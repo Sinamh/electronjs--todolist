@@ -24,7 +24,6 @@ const createAddWindow = function () {
       contextIsolation: false,
       alwaysOnTop: true,
       preload: path.resolve(app.getAppPath(), "preload.js"),
-      // icon: __dirname + "/assets/icons/todolist.png",
     },
   });
 
@@ -43,16 +42,7 @@ const createAddWindow = function () {
   addWindow.on("close", function () {
     mainModule.activateWindow();
     addWindow.destroy();
-    // addWindow.webContents.send("add:close");
   });
-
-  // addWindow.on("add:closed", () => {
-  //   addWindow.destroy();
-  // });
-
-  // addWindow.webContents.on("did-finish-load", () => {
-  //   addWindow.webContents.send("add:open");
-  // });
 
   require("@electron/remote/main").enable(addWindow.webContents);
 };
