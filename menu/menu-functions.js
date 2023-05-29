@@ -1,8 +1,6 @@
 const { ipcRenderer } = require("electron");
 
 function getCurrentWindow() {
-  // console.log(remote.getCurrentWindow());
-  // return remote.getCurrentWindow();
   return require("@electron/remote").getCurrentWindow();
 }
 
@@ -12,14 +10,12 @@ function openMenu(x, y) {
 
 function minimizeWindow(browserWindow = getCurrentWindow()) {
   if (browserWindow.minimizable) {
-    // browserWindow.isMinimizable() for old electron versions
     browserWindow.minimize();
   }
 }
 
 function maximizeWindow(browserWindow = getCurrentWindow()) {
   if (browserWindow.maximizable) {
-    // browserWindow.isMaximizable() for old electron versions
     browserWindow.maximize();
   }
 }
