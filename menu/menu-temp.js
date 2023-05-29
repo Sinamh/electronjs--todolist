@@ -5,7 +5,6 @@ const createAddWindow = require("../add");
 
 const isMac = process.platform === "darwin";
 
-// const mainWindow = window.getCurrentWindow();
 let mainWindow;
 
 // Create menu template
@@ -51,7 +50,6 @@ if (process.env.NODE_ENV !== "production") {
         label: "Toggle DevTools",
         accelerator: isMac ? "command+I" : "Ctrl+I",
         click(item, focusedWindow) {
-          // focusedWindow.toggleDevTools();
           focusedWindow.openDevTools({ detached: true });
         },
       },
@@ -62,10 +60,7 @@ if (process.env.NODE_ENV !== "production") {
   });
 }
 
-// console.log(mainWindow);
-
 exports.getWindowReference = function (thewindow) {
-  // console.log(thewindow);
   mainWindow = thewindow;
 };
 exports.createMenuTemplate = () => createMenuTemplate;
