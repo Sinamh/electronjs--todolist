@@ -1,6 +1,6 @@
 # ElectronToDoList
 
-A simple shopping list desktop app created using electronjs \ 
+A simple shopping list desktop app created using electronjs\
 Click on tasks in task list to switch their states
 
 ### Screenshots
